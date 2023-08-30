@@ -91,7 +91,7 @@ export const {
   useSingleBooksDetailsQuery,
   useGetCommentQuery,
   usePostCommentMutation,
+  usePostEditBookMutation,
   usePostDeleteBookMutation,
   useAddBookPostMutation,
-  useEditBookPostMutation,
 } = bookApi;

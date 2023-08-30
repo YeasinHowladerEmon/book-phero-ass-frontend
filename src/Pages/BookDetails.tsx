@@ -4,15 +4,22 @@ import { Button } from '../components/ui/button';
 import { usePostDeleteBookMutation, useSingleBooksDetailsQuery } from '../redux/features/book/bookApi';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../redux/hook';
+import { useEffect } from 'react';
 import swal from 'sweetalert';
 const BookDetails = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const user = useAppSelector((state) => state.auth.user)
-    const [postDeleteBook ] = usePostDeleteBookMutation()
-    const { data: book } = useSingleBooksDetailsQuery(id)
+    const [postDeleteBook] = usePostDeleteBookMutation()
+    const { data: book, refetch } = useSingleBooksDetailsQuery(id)
     const token = user?.data?.accessToken;
-    
+
+    useEffect(() => {
+        refetch()
+    }, [id, refetch])
+
+console.log(book);
+
     const handleDelete = async () => {
         swal({
             title: "Are you sure?",
@@ -69,9 +76,9 @@ const BookDetails = () => {
                     </div>
                     <br />
                     <form onSubmit={e => e.preventDefault()}>
-                    <div>
-                        <Button onClick={handleDelete}>Delete</Button>
-                    </div>
+                        <div>
+                            <Button onClick={handleDelete}>Delete</Button>
+                        </div>
                     </form>
                 </div>
             </div>
