@@ -45,14 +45,16 @@ const Books = () => {
 
 
     const bookData = filterBooksData?.data ? filterBooksData?.data : searchBooksData ? searchBooksData?.data : allBooksData?.data;
-    const isLoading = filterBooksLoading ? filterBooksLoading : searchBooksLoading ? searchBooksLoading : allBooksLoading;
-    const isError = filterBooksError ? filterBooksError : searchBooksError ? searchBooksError : allBooksError;
+    const isLoadings = filterBooksLoading ? filterBooksLoading : searchBooksLoading ? searchBooksLoading : allBooksLoading;
+    const isErrors = filterBooksError ? filterBooksError : searchBooksError ? searchBooksError : allBooksError;
 
-    if(isLoading){
-        toast.loading('Waiting...');    
-    }
-    if(isError){
+// console.log(isLoading);
+
+    if (isErrors) {
         toast.error("Something went wrong")
+    }
+    if (!isLoadings) {
+        toast.success('successful');
     }
 
     console.log(bookData);
@@ -69,19 +71,19 @@ const Books = () => {
 
     // get data some experiment
     useEffect(() => {
-        
+
         axios.get('https://book-server-cyan.vercel.app/api/v1/books/all-books')
             .then((response) => {
                 // Handle the response data
                 setDataF(response.data.data);
-                  console.log('data',response.data.data)
+                console.log('data', response.data.data)
             })
             .catch((error) => {
                 // Handle any errors that occurred during the request
                 console.error('Error fetching books:', error);
             });
-            refetch() // refetch the data from redux toolkit
-    }, [])
+        refetch() // refetch the data from redux toolkit
+    }, [refetch])
     return (
         <div className="grid grid-cols-12 max-w-7xl mx-auto relative ">
             <div className="col-span-3 z mr-10 space-y-5 border rounded-2xl border-gray-200/80 p-5 self-start sticky top-16 h-[calc(100vh-80px)]">
@@ -133,29 +135,29 @@ const Books = () => {
                     </form>
                 </div>
                 <div className="col-span-9 grid grid-cols-2 gap-10">
-                    {isLoading ?
-                        <Toaster
-                        position="top-center"
-                        reverseOrder={false}
-                      />
-                        : isError ? (
+                    {isLoadings ?
+                       <Toaster
+                       position="top-center"
+                       reverseOrder={false}
+                   />
+                        : isErrors ? (
                             <Toaster
-                            position="top-center"
-                            reverseOrder={false}
-                          />
-
+                                position="top-center"
+                                reverseOrder={false}
+                            />
                         ) : bookData && bookData.length > 0 ? (
                             bookData.map((book: IBook) => (<HomeBook key={book._id} book={book} />))
                         ) : (
-                            <Toaster
-                            position="top-center"
-                            reverseOrder={false}
-                          />
+                            <>
+                                <div>
+                                    <h2>Book is not found</h2>
+                                </div>
+                            </>
                         )}
                 </div>
             </div>
         </div>
-        
+
     );
 };
 

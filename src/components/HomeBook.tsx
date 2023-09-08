@@ -2,16 +2,24 @@ import { Link } from "react-router-dom";
 import { IBook } from "../types/globalTypes";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "./ui/card";
 import { Button } from "./ui/button";
+import { bookAdded } from "../redux/features/wishlist/wishlistSlice";
+import { useAppDispatch, } from "../redux/hook";
+import toast from "react-hot-toast";
 
 interface IProps {
   book: IBook
 }
 
-const handleAddProduct = () => {
-
-}
 
 export default function HomeBook({ book }: IProps) {
+  const dispatch = useAppDispatch();
+
+  const handleWishlist = (book: IBook) => {
+    dispatch(bookAdded(book))
+    toast.success('successfully added to wishlist');
+  }
+
+
   // console.log(book);
   return (
     <div className="">
@@ -31,12 +39,12 @@ export default function HomeBook({ book }: IProps) {
             <p className="text-sm">Publication Year: {book?.genre}</p>
             <p className="text-sm">Publication Year: {book?.publicationDate}</p>
           </CardContent>
-          <CardFooter>
-            <Button variant="default" onClick={() => handleAddProduct()}>
-              Add to cart
-            </Button>
-          </CardFooter>
         </Link>
+        <CardFooter>
+          <Button variant="default" onClick={() => handleWishlist(book)}>
+            Add to Wishlist
+          </Button>
+        </CardFooter>
       </Card>
     </div>
   );

@@ -38,7 +38,7 @@ export const loginUser = createAsyncThunk<
 >("auth/login", async ({ email, password }: IUser) => {
   try {
     const res = await axios.post<IUser>(
-      "http://localhost:5000/api/v1/users/login",
+      "https://book-server-emonibnsalim-gmailcom.vercel.app/api/v1/users/login",
       { email, password }
     );
     return res.data;
@@ -70,7 +70,7 @@ export const createUser = createAsyncThunk<
 >("auth/create-user", async (newUser) => {
   try {
     const res = await axios.post<IUser>(
-      "http://localhost:5000/api/v1/users/create-user",
+      "https://book-server-emonibnsalim-gmailcom.vercel.app/api/v1/users/create-user",
       newUser
     );
     console.log(res.data);

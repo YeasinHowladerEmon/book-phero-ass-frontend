@@ -6,4 +6,5 @@ export interface IBook {
   publicationDate: string;
   userId?: string;
   comment?: string[];
+  status?: string;
 }
