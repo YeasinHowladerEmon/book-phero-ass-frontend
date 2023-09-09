@@ -92,7 +92,7 @@ const Books = () => {
                     <div className="max-w-xl">
                         <Select onValueChange={(e) => setSelectedGenre(e)}>
                             <SelectTrigger className="w-[250px]">
-                                <SelectValue placeholder="Select a fruit" />
+                                <SelectValue placeholder="Select a genre" />
                             </SelectTrigger>
                             <SelectContent>
                                 <SelectGroup>
@@ -111,7 +111,7 @@ const Books = () => {
                     <div className="max-w-xl">
                         <Select onValueChange={(e) => { setSelectedPublicationYear(e) }}>
                             <SelectTrigger className="w-[250px]">
-                                <SelectValue placeholder="Select a fruit" />
+                                <SelectValue placeholder="Select a Year" />
                             </SelectTrigger>
                             <SelectContent>
                                 <SelectGroup>
